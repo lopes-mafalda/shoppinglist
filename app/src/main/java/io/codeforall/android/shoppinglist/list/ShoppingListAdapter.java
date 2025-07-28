@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.codeforall.android.shoppinglist.R;
+import io.codeforall.android.shoppinglist.persistence.model.Item;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 

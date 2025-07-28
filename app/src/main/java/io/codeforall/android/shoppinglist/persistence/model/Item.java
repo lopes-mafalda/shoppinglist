@@ -1,4 +1,4 @@
-package io.codeforall.android.shoppinglist.list;
+package io.codeforall.android.shoppinglist.persistence.model;
 
 import java.util.ArrayList;
 import java.util.List;

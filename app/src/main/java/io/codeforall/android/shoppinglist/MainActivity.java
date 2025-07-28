@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.codeforall.android.shoppinglist.list.Item;
+import io.codeforall.android.shoppinglist.persistence.model.Item;
 import io.codeforall.android.shoppinglist.list.ShoppingListAdapter;
 
 public class MainActivity extends AppCompatActivity {
