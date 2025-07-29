@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class FormActivity extends AppCompatActivity {
 
     public static final String NAME = "Name";
-    public static final String DESCRIPTION = "Description";
+    public static final String QUANTITY = "Quantity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +27,14 @@ public class FormActivity extends AppCompatActivity {
         addButton.setOnClickListener(v -> {
 
             EditText nameInput = findViewById(R.id.name_input);
-            EditText descriptionInput = findViewById(R.id.description_input);
+            EditText quantInput = findViewById(R.id.quantity_input);
 
             String nameStr = String.valueOf(nameInput.getText()).trim();
-            String descStr = String.valueOf(descriptionInput.getText()).trim();
+            String quantStr = String.valueOf(quantInput.getText()).trim();
 
             Intent resultIntent = new Intent();
             resultIntent.putExtra(NAME, nameStr);
-            resultIntent.putExtra(DESCRIPTION, descStr);
+            resultIntent.putExtra(QUANTITY, quantStr);
 
             setResult(RESULT_OK, resultIntent);
             finish();

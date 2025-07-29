@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.codeforall.android.shoppinglist.R;
+import io.codeforall.android.shoppinglist.persistence.DBHelper;
 import io.codeforall.android.shoppinglist.persistence.model.Item;
+import io.codeforall.android.shoppinglist.service.ItemService;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 
     private final List<Item> data;
-    private final Context context;
+    private ItemService service;
 
-    public ShoppingListAdapter(List<Item> data, Context context) {
-        this.data = data;
-        this.context = context;
+    public ShoppingListAdapter(ItemService service) {
+        this.service = service;
+        this.data = service.getAll();
     }
 
     @NonNull
@@ -35,13 +37,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(data.get(position).getName());
-        holder.description.setText(data.get(position).getNote());
+        holder.quantity.setText(data.get(position).getQuantity());
         holder.removeButton.setOnClickListener(v -> {
-            int viewPosition = holder.getBindingAdapterPosition();
-            if (viewPosition != RecyclerView.NO_POSITION) {
-                remove(viewPosition);
-            }
+            int adapterPosition = holder.getBindingAdapterPosition();
+            Item item = data.get(adapterPosition);
+            service.delete(item);
+            remove(adapterPosition);
         });
+
 
     }
 
@@ -55,23 +58,23 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         notifyItemRemoved(id);
     }
 
-    public void add(String name, String description){
-        int index = getItemCount();
-        data.add(new Item(index, name, description));
-        notifyItemInserted(index);
+    public void add(Item item) {
+        data.add(item);
+        notifyItemInserted(data.size() - 1);
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name;
-        private final TextView description;
+        private final TextView quantity;
         private final Button removeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.name = itemView.findViewById(R.id.card_name);
-            this.description = itemView.findViewById(R.id.card_description);
+            this.quantity = itemView.findViewById(R.id.card_quantity);
             this.removeButton = itemView.findViewById(R.id.card_remove_button);
         }
     }

@@ -10,8 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import io.codeforall.android.shoppinglist.persistence.DBHelper;
 import io.codeforall.android.shoppinglist.persistence.model.Item;
 import io.codeforall.android.shoppinglist.list.ShoppingListAdapter;
+import io.codeforall.android.shoppinglist.service.ItemService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,14 +26,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = setUpRecyclerView();
+        DBHelper dbHelper = new DBHelper(this);
+        ItemService service = new ItemService(dbHelper);
 
-        setUpFormActivity(recyclerView);
+        service.clear();
+        //service.seed();
+
+
+        RecyclerView recyclerView = setUpRecyclerView(service);
+
+        setUpFormActivity(recyclerView, service);
 
     }
 
-    private RecyclerView setUpRecyclerView() {
-        ShoppingListAdapter adapter = new ShoppingListAdapter(Item.list(), this);
+    private RecyclerView setUpRecyclerView(ItemService service) {
+        ShoppingListAdapter adapter = new ShoppingListAdapter(service);
 
         RecyclerView recyclerView = findViewById(R.id.list);
         recyclerView.setAdapter(adapter);
@@ -38,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         return recyclerView;
     }
 
-    private void setUpFormActivity(RecyclerView recyclerView){
+    private void setUpFormActivity(RecyclerView recyclerView, ItemService service) {
         Button addButton = findViewById(R.id.form_button);
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, FormActivity.class);
@@ -48,14 +59,20 @@ public class MainActivity extends AppCompatActivity {
         formLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
+
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
-                        if (data != null && data.hasExtra(FormActivity.DESCRIPTION) && data.hasExtra(FormActivity.NAME)) {
+
+                        if (data != null && data.hasExtra(FormActivity.QUANTITY) && data.hasExtra(FormActivity.NAME)) {
                             String name = data.getStringExtra(FormActivity.NAME);
-                            String description = data.getStringExtra(FormActivity.DESCRIPTION);
+                            Integer quantity = Integer.valueOf(data.getStringExtra(FormActivity.QUANTITY));
+
+                            Item savedItem = service.save(new Item(name, quantity));
+
                             ShoppingListAdapter adapter = (ShoppingListAdapter) recyclerView.getAdapter();
+
                             assert adapter != null;
-                            adapter.add(name, description);
+                            adapter.add(savedItem);
                         }
                     }
                 }
