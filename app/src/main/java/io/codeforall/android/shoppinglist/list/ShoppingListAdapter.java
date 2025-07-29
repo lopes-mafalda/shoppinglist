@@ -42,8 +42,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             service.delete(item);
             remove(adapterPosition);
         });
-
-
     }
 
     @Override

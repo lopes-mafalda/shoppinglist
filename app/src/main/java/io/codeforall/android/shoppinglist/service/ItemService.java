@@ -18,7 +18,6 @@ public class ItemService {
         this.dbHelper = dbHelper;
     }
 
-
     //returns item with id set
     public Item save(Item item) {
         ContentValues values = new ContentValues();
@@ -46,7 +45,7 @@ public class ItemService {
         int nameIndex = cursor.getColumnIndexOrThrow(DBSchema.ItemsTable.COL_NAME);
         int quantIndex = cursor.getColumnIndexOrThrow(DBSchema.ItemsTable.COL_QUANTITY);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             items.add(new Item(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getInt(quantIndex)));
         }
 
@@ -58,8 +57,7 @@ public class ItemService {
         dbHelper.getDb().delete(DBSchema.ItemsTable.TABLE, null, null);
     }
 
-
-    public void seed(){
+    public void seed() {
         save(new Item("batatas", 10));
         save(new Item("cenouras", 5));
         save(new Item("lanterna", 1));
@@ -67,9 +65,8 @@ public class ItemService {
 
     public void delete(Item item) {
         String whereClause = DBSchema.ItemsTable._ID + " = ?";
-        String[] whereArgs = { String.valueOf(item.getId()) };
+        String[] whereArgs = {String.valueOf(item.getId())};
 
         dbHelper.getDb().delete(DBSchema.ItemsTable.TABLE, whereClause, whereArgs);
     }
-
 }

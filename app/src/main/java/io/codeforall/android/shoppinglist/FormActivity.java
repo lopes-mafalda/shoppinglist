@@ -43,6 +43,7 @@ public class FormActivity extends AppCompatActivity {
 
     private void setUpBackButton() {
         Button backButton = findViewById(R.id.back_button);
+
         backButton.setOnClickListener(v -> {
             finish();
         });

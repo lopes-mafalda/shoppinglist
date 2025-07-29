@@ -7,9 +7,9 @@ import android.provider.BaseColumns;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db;
     private static final String DATABASE_NAME = "shopping_list.db";
     private static final int DATABASE_VERSION_DEFAULT = 1;
+    private SQLiteDatabase db;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION_DEFAULT);
@@ -37,8 +37,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DBSchema.ItemsTable.TABLE);
         onCreate(db);
-
-
     }
 
     public SQLiteDatabase getDb() {
