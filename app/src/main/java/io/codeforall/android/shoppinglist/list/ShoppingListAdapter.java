@@ -1,6 +1,5 @@
 package io.codeforall.android.shoppinglist.list;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.codeforall.android.shoppinglist.R;
-import io.codeforall.android.shoppinglist.persistence.DBHelper;
 import io.codeforall.android.shoppinglist.persistence.model.Item;
 import io.codeforall.android.shoppinglist.service.ItemService;
 

@@ -29,14 +29,12 @@ public class MainActivity extends AppCompatActivity {
         DBHelper dbHelper = new DBHelper(this);
         ItemService service = new ItemService(dbHelper);
 
-        service.clear();
+        //database clearing and fake data:
+        //service.clear();
         //service.seed();
 
-
         RecyclerView recyclerView = setUpRecyclerView(service);
-
         setUpFormActivity(recyclerView, service);
-
     }
 
     private RecyclerView setUpRecyclerView(ItemService service) {
