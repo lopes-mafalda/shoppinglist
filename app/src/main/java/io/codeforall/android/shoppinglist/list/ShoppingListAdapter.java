@@ -17,7 +17,7 @@ import io.codeforall.android.shoppinglist.service.ItemService;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 
-    private final List<Item> data;
+    private List<Item> data;
     private ItemService service;
 
     public ShoppingListAdapter(ItemService service) {
@@ -59,6 +59,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         notifyItemInserted(data.size() - 1);
     }
 
+    public void setData(List<Item> data) {
+        this.data = data;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

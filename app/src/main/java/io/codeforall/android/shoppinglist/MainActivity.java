@@ -2,6 +2,8 @@ package io.codeforall.android.shoppinglist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import io.codeforall.android.shoppinglist.loader.ItemLoader;
 import io.codeforall.android.shoppinglist.persistence.DBHelper;
 import io.codeforall.android.shoppinglist.persistence.model.Item;
 import io.codeforall.android.shoppinglist.list.ShoppingListAdapter;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = setUpRecyclerView(service);
         setUpFormActivity(recyclerView, service);
+
+        ItemLoader itemLoader = new ItemLoader(new Handler(Looper.getMainLooper()));
+
+        itemLoader.loadItems(service, (ShoppingListAdapter) recyclerView.getAdapter());
     }
 
     private RecyclerView setUpRecyclerView(ItemService service) {
