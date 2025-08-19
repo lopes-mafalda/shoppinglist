@@ -115,16 +115,16 @@ public class MainActivity extends AppCompatActivity {
                             String q = it.getQuantity();
                             return "• " + it.getName() + (q != null && !q.equals("0") ? " x" + q : "");
                         })
-                        .reduce("Lista de compras:\n", (acc, line) -> acc + line + "\n");
+                        .reduce("Shopping list:\n", (acc, line) -> acc + line + "\n");
 
             }
 
             Intent send = new Intent(Intent.ACTION_SEND);
             send.setType("text/plain");
-            send.putExtra(Intent.EXTRA_SUBJECT, "Lista de compras");
+            send.putExtra(Intent.EXTRA_SUBJECT, "Shopping list: ");
             send.putExtra(Intent.EXTRA_TEXT, listStr);
 
-            startActivity(Intent.createChooser(send, "Partilhar via"));
+            startActivity(Intent.createChooser(send, "Share by: "));
         });
     }
 }
