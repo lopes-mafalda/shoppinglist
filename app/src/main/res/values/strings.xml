@@ -5,4 +5,8 @@
     <string name="hint_form">Description...</string>
     <string name="x">X</string>
     <string name="quantity">Quantity</string>
+    <string name="check_prices">Check Prices</string>
+    <string name="share">Share</string>
+    <string name="plus">+</string>
+    <string name="shopping_list">Shopping List</string>
 </resources>
