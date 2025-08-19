@@ -3,4 +3,6 @@
     <string name="remove">Remove</string>
     <string name="form_title">Add item to shopping list:</string>
     <string name="hint_form">Description...</string>
+    <string name="x">X</string>
+    <string name="quantity">Quantity</string>
 </resources>
