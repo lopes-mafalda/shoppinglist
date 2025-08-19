@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //db
         DBHelper dbHelper = new DBHelper(this);
         ItemService service = new ItemService(dbHelper);
 
@@ -36,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
         //service.clear();
         //service.seed();
 
+        //list
         RecyclerView recyclerView = setUpRecyclerView(service);
+        ItemLoader itemLoader = new ItemLoader(new Handler(Looper.getMainLooper()));
+        itemLoader.loadItems(service, (ShoppingListAdapter) recyclerView.getAdapter());
+
+        //form to add
         setUpFormActivity(recyclerView, service);
 
-        ItemLoader itemLoader = new ItemLoader(new Handler(Looper.getMainLooper()));
-
-        itemLoader.loadItems(service, (ShoppingListAdapter) recyclerView.getAdapter());
+        setUpPricesBtn();
     }
 
     private RecyclerView setUpRecyclerView(ItemService service) {
@@ -82,5 +86,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void setUpPricesBtn(){
+        Button browserBtn = findViewById(R.id.prices_button);
+
+        browserBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    android.net.Uri.parse("https://www.continente.pt/"));
+            startActivity(intent);
+        });
     }
 }
