@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setUpFormActivity(recyclerView, service);
 
         setUpPricesBtn();
+        setUpShare(service);
     }
 
     private RecyclerView setUpRecyclerView(ItemService service) {
@@ -95,6 +96,35 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     android.net.Uri.parse("https://www.continente.pt/"));
             startActivity(intent);
+        });
+    }
+
+    private void setUpShare(ItemService service){
+        Button shareBtn = findViewById(R.id.share_button);
+        shareBtn.setOnClickListener(v -> {
+            RecyclerView recyclerView = findViewById(R.id.list);
+            ShoppingListAdapter adapter = (ShoppingListAdapter) recyclerView.getAdapter();
+
+            String listStr = "";
+
+            if (adapter != null) {
+                List<Item> items = service.getAll();
+
+                listStr = items.stream()
+                        .map(it -> {
+                            String q = it.getQuantity();
+                            return "• " + it.getName() + (q != null && !q.equals("0") ? " x" + q : "");
+                        })
+                        .reduce("Lista de compras:\n", (acc, line) -> acc + line + "\n");
+
+            }
+
+            Intent send = new Intent(Intent.ACTION_SEND);
+            send.setType("text/plain");
+            send.putExtra(Intent.EXTRA_SUBJECT, "Lista de compras");
+            send.putExtra(Intent.EXTRA_TEXT, listStr);
+
+            startActivity(Intent.createChooser(send, "Partilhar via"));
         });
     }
 }
